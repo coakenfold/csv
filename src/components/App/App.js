@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 import "./App.css";
 import DragAndDrop from "../DragAndDrop/DragAndDrop";
 import CSV from "../CSV/CSV";
+import CSVDirectInput from "../CSVDirectInput/CSVDirectInput";
 const CSVContext = createContext("");
 function App() {
   const [files, setFiles] = useState();
@@ -10,6 +11,7 @@ function App() {
       <div className="App">
         <h1>Technical Test</h1>
         <DragAndDrop updateFiles={setFiles} />
+        <CSVDirectInput updateFiles={setFiles} />
         {files && <CSV context={CSVContext} />}
       </div>
     </CSVContext.Provider>
