@@ -1,5 +1,7 @@
 import { parse } from "./csv";
+
 export const parseCSV = parse;
+
 export const parsedCSVHasExactHeader = ({ head, data = [] }) => {
   if (data[0] !== undefined) {
     return data[0].every((currentValue, index) => {
@@ -8,6 +10,7 @@ export const parsedCSVHasExactHeader = ({ head, data = [] }) => {
   }
   return false;
 };
+
 export const removeExactHeader = ({ head, data }) => {
   if (parsedCSVHasExactHeader({ head, data })) {
     const _data = [...data];
