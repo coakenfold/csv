@@ -1,6 +1,9 @@
+import { useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-
-function DragAndDrop({ updateFiles }) {
+import { List, Space, Typography } from "antd";
+import "./DragAndDrop.css";
+const { Text } = Typography;
+function DragAndDrop({ updateFile, updateFileName }) {
   const {
     acceptedFiles,
     fileRejections,
@@ -10,51 +13,49 @@ function DragAndDrop({ updateFiles }) {
     accept: "text/csv",
   });
 
-  const files = acceptedFiles.map((file) => {
-    file.text().then((text) => {
-      console.log({ csv: text });
-      updateFiles(text);
-    });
-
-    return (
-      <li key={file.path}>
-        {file.path} - {file.size} bytes
-      </li>
-    );
-  });
-
-  const fileRejectionItems = fileRejections.map(({ file, errors }) => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-      <ul>
-        {errors.map((e) => (
-          <li key={e.code}>{e.message}</li>
-        ))}
-      </ul>
-    </li>
-  ));
-
+  useEffect(() => {
+    if (acceptedFiles.length > 0) {
+      acceptedFiles.forEach((file) => {
+        const { name } = file;
+        file.text().then((text) => {
+          updateFile(text);
+          updateFileName(name);
+        });
+      });
+    }
+  }, [acceptedFiles, updateFile, updateFileName]);
   return (
-    <section className="container">
-      <div {...getRootProps({ className: "dropzone" })}>
-        <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
-        <em>(Only *.csv text files will be accepted)</em>
-      </div>
-      <aside>
-        {files.length > 0 && (
-          <>
-            <h4>Files</h4>
-            <ul>{files}</ul>
-          </>
-        )}
-        {fileRejectionItems.length > 0 && (
-          <>
-            <h4>Rejected files</h4>
-            <ul>{fileRejectionItems}</ul>
-          </>
-        )}
-      </aside>
+    <section className="DragAndDrop">
+      <Space direction="vertical" style={{ width: "100%" }}>
+        <div {...getRootProps({ className: "DragAndDrop__dropzone" })}>
+          <input {...getInputProps()} />
+          <Space direction="vertical" style={{ width: "100%" }}>
+            <Text>Drag 'n' drop a file here, or click to select a file</Text>
+            <Text strong>(Only *.csv text files will be accepted)</Text>
+            {fileRejections.map(({ file, errors }) => {
+              const { name } = file;
+              return (
+                <Text type="danger">
+                  Rejected {name} - {errors.map((e) => e.message)}
+                </Text>
+              );
+            })}
+          </Space>
+        </div>
+        <aside>
+          <List
+            size="large"
+            header={<div>Uploaded File</div>}
+            bordered
+            dataSource={acceptedFiles}
+            renderItem={({ path, size }) => (
+              <List.Item>
+                {path} - {size} bytes
+              </List.Item>
+            )}
+          />
+        </aside>
+      </Space>
     </section>
   );
 }

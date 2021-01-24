@@ -1,20 +1,36 @@
-import { createContext, useState } from "react";
-import "./App.css";
-import DragAndDrop from "../DragAndDrop/DragAndDrop";
+import { useState } from "react";
+import { Typography, Space } from "antd";
+import Input from "../Input/Input";
 import CSV from "../CSV/CSV";
+import DragAndDrop from "../DragAndDrop/DragAndDrop";
 import CSVDirectInput from "../CSVDirectInput/CSVDirectInput";
-const CSVContext = createContext("");
+const { Title } = Typography;
 function App() {
-  const [files, setFiles] = useState();
+  const [uploadCSV, setUploadCSV] = useState();
+  const [uploadCSVName, setUploadCSVName] = useState();
+  const [manualCSV, setManualCSV] = useState();
   return (
-    <CSVContext.Provider value={files}>
-      <div className="App">
-        <h1>Technical Test</h1>
-        <DragAndDrop updateFiles={setFiles} />
-        <CSVDirectInput updateFiles={setFiles} />
-        {files && <CSV context={CSVContext} />}
-      </div>
-    </CSVContext.Provider>
+    <div style={{ padding: "2rem" }}>
+      <Space direction="vertical" style={{ width: "100%" }}>
+        <Title>CSV importer</Title>
+        <Input
+          tabPane1={
+            <DragAndDrop
+              updateFile={setUploadCSV}
+              updateFileName={setUploadCSVName}
+            />
+          }
+          tabPane2={
+            <CSVDirectInput
+              updateFile={setManualCSV}
+              uploadCSV={uploadCSV}
+              uploadCSVName={uploadCSVName}
+            />
+          }
+        />
+        <CSV manualCSV={manualCSV} uploadCSV={uploadCSV} />
+      </Space>
+    </div>
   );
 }
 

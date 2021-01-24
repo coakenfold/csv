@@ -1,17 +1,29 @@
 import Papa from "papaparse";
-import { useContext } from "react";
-function CSV({ context }) {
-  const csv = useContext(context);
-  var data = JSON.stringify(
-    Papa.parse(csv, {
-      dynamicTyping: true,
-    })
-  );
+import { Typography, Descriptions } from "antd";
+const { Title } = Typography;
+function CSV({ manualCSV, uploadCSV }) {
+  var manual = manualCSV
+    ? JSON.stringify(
+        Papa.parse(manualCSV, {
+          dynamicTyping: true,
+        })
+      )
+    : "";
+
+  var upload = uploadCSV
+    ? JSON.stringify(
+        Papa.parse(uploadCSV, {
+          dynamicTyping: true,
+        })
+      )
+    : "";
   return (
     <div className="CSV">
-      <h1>CSV</h1>
-      <textarea value={csv} />
-      <textarea value={data} />
+      <Title level={2}>CSVs available</Title>
+      <Descriptions bordered layout="vertical">
+        <Descriptions.Item label="Drag and drop">{upload}</Descriptions.Item>
+        <Descriptions.Item label="Direct input">{manual}</Descriptions.Item>
+      </Descriptions>
     </div>
   );
 }
