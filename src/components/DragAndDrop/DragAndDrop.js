@@ -42,19 +42,21 @@ function DragAndDrop({ updateFile, updateFileName }) {
             })}
           </Space>
         </div>
-        <aside>
-          <List
-            size="large"
-            header={<div>Uploaded File</div>}
-            bordered
-            dataSource={acceptedFiles}
-            renderItem={({ path, size }) => (
-              <List.Item>
-                {path} - {size} bytes
-              </List.Item>
-            )}
-          />
-        </aside>
+        {acceptedFiles.length !== 0 && (
+          <aside>
+            <List
+              size="large"
+              header={<div>Uploaded File</div>}
+              bordered
+              dataSource={acceptedFiles}
+              renderItem={({ path, size }) => (
+                <List.Item>
+                  {path} - {size} bytes
+                </List.Item>
+              )}
+            />
+          </aside>
+        )}
       </Space>
     </section>
   );
