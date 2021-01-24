@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Typography, Space } from "antd";
 import Input from "../Input/Input";
-import CSV from "../CSV/CSV";
+import CSVDisplay from "../CSVDisplay/CSVDisplay";
 import DragAndDrop from "../DragAndDrop/DragAndDrop";
 import CSVDirectInput from "../CSVDirectInput/CSVDirectInput";
+
 const { Title } = Typography;
 function App() {
   const [uploadCSV, setUploadCSV] = useState();
@@ -15,20 +16,29 @@ function App() {
         <Title>CSV importer</Title>
         <Input
           tabPane1={
-            <DragAndDrop
-              updateFile={setUploadCSV}
-              updateFileName={setUploadCSVName}
-            />
+            <Space direction="vertical" style={{ width: "100%" }}>
+              <DragAndDrop
+                updateFile={setUploadCSV}
+                updateFileName={setUploadCSVName}
+              />
+              {uploadCSV && (
+                <CSVDisplay title="Drag and drop results" rawCSV={uploadCSV} />
+              )}
+            </Space>
           }
           tabPane2={
-            <CSVDirectInput
-              updateFile={setManualCSV}
-              uploadCSV={uploadCSV}
-              uploadCSVName={uploadCSVName}
-            />
+            <Space direction="vertical" style={{ width: "100%" }}>
+              <CSVDirectInput
+                updateFile={setManualCSV}
+                uploadCSV={uploadCSV}
+                uploadCSVName={uploadCSVName}
+              />
+              {manualCSV && (
+                <CSVDisplay title="Direct input results" rawCSV={manualCSV} />
+              )}
+            </Space>
           }
         />
-        <CSV manualCSV={manualCSV} uploadCSV={uploadCSV} />
       </Space>
     </div>
   );
