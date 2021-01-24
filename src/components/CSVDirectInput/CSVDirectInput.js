@@ -1,6 +1,6 @@
-import Papa from "papaparse";
 import { useState } from "react";
 import { Input, Typography, Button, Space } from "antd";
+import { parseCSV } from "../../service/service";
 const { TextArea } = Input;
 const { Text } = Typography;
 
@@ -13,9 +13,7 @@ function CSVDirectInput({ updateFile, uploadCSV, uploadCSVName }) {
       onSubmit={(e, b, c) => {
         e.preventDefault();
         if (manualCSV) {
-          const { errors } = Papa.parse(manualCSV, {
-            dynamicTyping: true,
-          });
+          const { errors } = parseCSV(manualCSV);
           if (errors.length) {
             setCsvErrors(errors);
             return;
@@ -46,7 +44,9 @@ function CSVDirectInput({ updateFile, uploadCSV, uploadCSVName }) {
                 updateFile(uploadCSV);
               }}
             >
-              Copy {uploadCSVName}
+              <Text>
+                Copy from <Text strong>{uploadCSVName}</Text>
+              </Text>
             </Button>
           )}
         </Space>
