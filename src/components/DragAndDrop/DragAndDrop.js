@@ -26,10 +26,10 @@ function DragAndDrop({ updateFile, updateFileName }) {
   }, [acceptedFiles, updateFile, updateFileName]);
   return (
     <section className="DragAndDrop">
-      <Space direction="vertical" style={{ width: "100%" }}>
+      <Space direction="vertical" className="w-100">
         <div {...getRootProps({ className: "DragAndDrop__dropzone" })}>
           <input {...getInputProps()} />
-          <Space direction="vertical" style={{ width: "100%" }}>
+          <Space direction="vertical" className="w-100">
             <Text>Drag 'n' drop a file here, or click to select a file</Text>
             <Text strong>(Only *.csv text files will be accepted)</Text>
             {fileRejections.map(({ file, errors }) => {

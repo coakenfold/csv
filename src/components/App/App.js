@@ -4,19 +4,19 @@ import Input from "../Input/Input";
 import CSVDisplay from "../CSVDisplay/CSVDisplay";
 import DragAndDrop from "../DragAndDrop/DragAndDrop";
 import CSVDirectInput from "../CSVDirectInput/CSVDirectInput";
-
+import "./App.styles.css";
 const { Title } = Typography;
 function App() {
   const [uploadCSV, setUploadCSV] = useState();
   const [uploadCSVName, setUploadCSVName] = useState();
   const [manualCSV, setManualCSV] = useState();
   return (
-    <div style={{ padding: "2rem" }}>
-      <Space direction="vertical" style={{ width: "100%" }}>
+    <div className="App">
+      <Space direction="vertical" className="w-100">
         <Title>CSV importer</Title>
         <Input
           tabPane1={
-            <Space direction="vertical" style={{ width: "100%" }}>
+            <Space direction="vertical" className="w-100">
               <DragAndDrop
                 updateFile={setUploadCSV}
                 updateFileName={setUploadCSVName}
@@ -27,7 +27,7 @@ function App() {
             </Space>
           }
           tabPane2={
-            <Space direction="vertical" style={{ width: "100%" }}>
+            <Space direction="vertical" className="w-100">
               <CSVDirectInput
                 updateFile={setManualCSV}
                 uploadCSV={uploadCSV}
