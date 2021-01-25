@@ -1,2 +1,3 @@
-Part number,Unit price,Quantity,UOM (unit of measure),Total cost,Leadtime,Supplier name,Supplier address,Purchased date,Delivery address
+Part number,Unit price,Quantity,UOM (EA/G/M),Total cost,Leadtime,Supplier name,Supplier address,Purchased date,Delivery address
 1,0.25,10,G,2.50,3d,Acme,123 Fake St,04-06-2020,456 Client Location
+2,0.5,3,G,.75,1d,Acme,#3 Artificial Blvd,04-06-2020,999 House
