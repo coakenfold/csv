@@ -9,3 +9,10 @@
 - [x] Table cell validation
 - [x] Transform `csv` to `json`
 - [x] Fake POST to server
+
+
+## To run
+
+- `yarn install`
+- `npm run start`
+- `npm run test`
