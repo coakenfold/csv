@@ -29,10 +29,8 @@ function App() {
   }, []);
   const validatorMessages = {
     whitespace: `Please add content`,
-    min: `Zero is the minimum`,
     required: "A: '${name}' is required!",
     type: "'${name}' is not a valid ${type}",
-    pattern: "'${name}' does not match pattern ${pattern}",
   };
   const validator = useMemo(() => {
     const rulewhitespace = {
