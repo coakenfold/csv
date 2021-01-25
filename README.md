@@ -8,4 +8,4 @@
 - [x] Inline editing of table cells
 - [x] Table cell validation
 - [x] Transform `csv` to `json`
-- [ ] Post to server
+- [x] Fake POST to server
