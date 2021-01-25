@@ -16,3 +16,5 @@
 - `npm install`
 - `npm run start`
 - `npm run test`
+
+NOTE: developed against files in `./testing/*`, ie: `./testing/basic.csv`
