@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from "react";
 import { Typography, Space, ConfigProvider } from "antd";
 import Tabs from "../Tabs/Tabs";
 import Table from "../Table/Table";
-import CSVDisplay from "../CSVDisplay/CSVDisplay";
 import DragAndDrop from "../DragAndDrop/DragAndDrop";
 import CSVDirectInput from "../CSVDirectInput/CSVDirectInput";
 import { parseCSV } from "../../service/service";
@@ -123,17 +122,11 @@ function App() {
                       updateFileName={setUploadCSVName}
                     />
                     {uploadCSV && (
-                      <>
-                        <CSVDisplay
-                          title="'Drag and drop' transformation"
-                          rawCSV={uploadCSV}
-                        />
-                        <Table
-                          config={parsedUploadCSV}
-                          updateCSV={updateUploadCSV}
-                          csvData={uploadCSV}
-                        />
-                      </>
+                      <Table
+                        config={parsedUploadCSV}
+                        updateCSV={updateUploadCSV}
+                        csvData={uploadCSV}
+                      />
                     )}
                   </Space>
                 ),
@@ -148,17 +141,11 @@ function App() {
                       uploadCSVName={uploadCSVName}
                     />
                     {manualCSV && (
-                      <>
-                        <CSVDisplay
-                          title="'Direct input' transformation"
-                          rawCSV={manualCSV}
-                        />
-                        <Table
-                          config={parsedManualCSV}
-                          updateCSV={updateManualCSV}
-                          csvData={manualCSV}
-                        />
-                      </>
+                      <Table
+                        config={parsedManualCSV}
+                        updateCSV={updateManualCSV}
+                        csvData={manualCSV}
+                      />
                     )}
                   </Space>
                 ),
