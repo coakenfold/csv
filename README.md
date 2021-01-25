@@ -13,6 +13,6 @@
 
 ## To run
 
-- `yarn install`
+- `yarn install` or `npm install`
 - `npm run start`
 - `npm run test`
