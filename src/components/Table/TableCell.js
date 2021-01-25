@@ -28,7 +28,7 @@ const TableCell = ({
     form.setFieldsValue({
       [dataIndex]:
         componentType === "date"
-          ? moment(record[dataIndex], "YYYY-MM-DD")
+          ? moment(record[dataIndex], dateFormat)
           : record[dataIndex],
     });
   };
@@ -65,6 +65,8 @@ const TableCell = ({
     return componentType;
   });
   const componentType = ruleWithType ? ruleWithType.componentType : "text";
+  const dateFormat =
+    componentType === "date" ? ruleWithType.dateFormat : "YYYY-MM-DD";
   const formInitialValues = {
     [dataIndex]: record[dataIndex],
   };
@@ -94,10 +96,8 @@ const TableCell = ({
     case "date":
       inputType = (
         <DatePicker
-          format="YYYY-MM-DD"
-          style={{
-            width: "100%",
-          }}
+          format={dateFormat}
+          className="w-100"
           allowClear={false}
           ref={inputRef}
           onChange={onDateChange}
