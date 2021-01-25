@@ -47,6 +47,17 @@ function App() {
       }
     }
   }, [manualCSV, mapping]);
+
+  const updateUploadCSV = ({ key, ...updateData }) => {
+    const newParsedUploadCSV = Object.assign({}, parsedUploadCSV);
+    newParsedUploadCSV.data[key] = updateData;
+    setParsedUploadCSV(newParsedUploadCSV);
+  };
+  const updateManualCSV = ({ key, ...updateData }) => {
+    const newParsedManualCSV = Object.assign({}, parsedManualCSV);
+    newParsedManualCSV.data[key] = updateData;
+    setParsedManualCSV(newParsedManualCSV);
+  };
   return (
     <div className="App">
       <Space direction="vertical" className="w-100">
@@ -67,7 +78,10 @@ function App() {
                         title="Drag and drop results"
                         rawCSV={uploadCSV}
                       />
-                      <Table config={parsedUploadCSV} />
+                      <Table
+                        config={parsedUploadCSV}
+                        updateCSV={updateUploadCSV}
+                      />
                     </>
                   )}
                 </Space>
@@ -88,7 +102,10 @@ function App() {
                         title="Direct input results"
                         rawCSV={manualCSV}
                       />
-                      <Table config={parsedManualCSV} />
+                      <Table
+                        config={parsedManualCSV}
+                        updateCSV={updateManualCSV}
+                      />
                     </>
                   )}
                 </Space>

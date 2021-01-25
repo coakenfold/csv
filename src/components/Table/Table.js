@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Table as AntTable } from "antd";
 import TableCell from "./TableCell";
-function Table({ config }) {
+function Table({ config, updateCSV }) {
   const { data, headings, mapping } = config;
   if (data === undefined || headings === undefined || mapping === undefined) {
     return null;
@@ -19,8 +19,10 @@ function Table({ config }) {
         editable: true,
         dataIndex,
         title,
-        handleSave: () => {
-          console.log("save!");
+        key,
+        value,
+        onEditSave: (update) => {
+          updateCSV(update);
         },
       }),
     });
@@ -43,8 +45,8 @@ function Table({ config }) {
     />
   );
 }
-const { array } = PropTypes;
+const { object } = PropTypes;
 Table.propTypes = {
-  tabs: array,
+  config: object,
 };
 export default Table;

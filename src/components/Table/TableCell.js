@@ -6,87 +6,79 @@ const TableCell = ({
   children,
   dataIndex,
   record,
-  handleSave,
+  onEditSave,
   ...restProps
 }) => {
-  const [editing, setEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef(null);
-  //   const form = useContext(EditableContext);
-
+  const [editValue, setEditValue] = useState();
   useEffect(() => {
-    if (editing) {
+    if (isEditing) {
       inputRef.current.focus();
     }
-  }, [editing]);
+  }, [isEditing]);
 
-  const toggleEdit = () => {
-    setEditing(!editing);
-    // form.setFieldsValue({
-    //   [dataIndex]: record[dataIndex],
-    // });
+  const enterEditState = () => {
+    setIsEditing(true);
+  };
+  const exitEditState = () => {
+    setIsEditing(false);
+  };
+  const onEnterWhenNotEditing = (e) => {
+    if (e.key === "Enter") {
+      enterEditState();
+    }
+  };
+  const onEscapeWhileEditing = (e) => {
+    if (e.key === "Escape") {
+      exitEditState();
+    }
+  };
+  const onChange = (e) => {
+    setEditValue(e.currentTarget.value);
+  };
+  const onEnterWhileEditing = () => {
+    const update = {
+      ...record,
+      [dataIndex]: editValue,
+    };
+    onEditSave(update);
+    setIsEditing(false);
+  };
+  const formItemRules = [
+    {
+      required: true,
+      message: `${title} is required.`,
+    },
+  ];
+  const formInitialValues = {
+    [dataIndex]: record[dataIndex],
   };
 
-  const save = async () => {
-    console.log({ ...record });
-    setEditing(false);
-    // try {
-    //   const values = await form.validateFields();
-    //   toggleEdit();
-    //   handleSave({ ...record, ...values });
-    // } catch (errInfo) {
-    //   console.log("Save failed:", errInfo);
-    // }
-  };
-
-  let childNode = children;
-
-  if (editable) {
-    childNode = editing ? (
-      <Form
-        initialValues={{
-          [dataIndex]: record[dataIndex],
-        }}
-      >
-        <Form.Item
-          name={dataIndex}
-          rules={[
-            {
-              required: true,
-              message: `${title} is required.`,
-            },
-          ]}
-          style={{ margin: 0 }}
+  return (
+    <td {...restProps}>
+      {editable && isEditing ? (
+        <Form initialValues={formInitialValues}>
+          <Form.Item name={dataIndex} rules={formItemRules} className="m-0">
+            <Input
+              ref={inputRef}
+              onPressEnter={onEnterWhileEditing}
+              onBlur={exitEditState}
+              onKeyDown={onEscapeWhileEditing}
+              onChange={onChange}
+            />
+          </Form.Item>
+        </Form>
+      ) : (
+        <div
+          tabIndex={0}
+          onKeyDown={onEnterWhenNotEditing}
+          onClick={enterEditState}
         >
-          <Input
-            ref={inputRef}
-            onPressEnter={save}
-            onBlur={save}
-            onKeyDown={(e) => {
-              if (e.key === "Escape") {
-                setEditing(false);
-              }
-            }}
-          />
-        </Form.Item>
-      </Form>
-    ) : (
-      <div
-        className="editable-cell-value-wrap"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            setEditing(true);
-          }
-        }}
-        onClick={() => {
-          setEditing(true);
-        }}
-      >
-        {children}
-      </div>
-    );
-  }
-
-  return <td {...restProps}>{childNode}</td>;
+          {children}
+        </div>
+      )}
+    </td>
+  );
 };
 export default TableCell;
