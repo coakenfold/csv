@@ -1,10 +1,5 @@
-import {
-  parseCSV,
-  // parsedCSVHasExactHeader,
-  // removeExactHeader,
-} from "./service";
+import { parseCSV } from "./service";
 
-// const head = ["head 1", "head 2", "head 3"];
 const csv = `head 1,head 2,head 3
 h1r1Content,h2r1Content,h3r1Content
 h1r2Content,h2r2Content,h3r2Content`;
@@ -60,23 +55,3 @@ test("parses csv", () => {
     },
   });
 });
-// test("detects exact header", () => {
-//   expect(parsedCSVHasExactHeader({ head, data: parsed.data })).toBe(true);
-//   expect(parsedCSVHasExactHeader({ head, data: parsedNoHead.data })).toBe(
-//     false
-//   );
-//   expect(
-//     parsedCSVHasExactHeader({
-//       head: ["non-existent", "headings", "in the", "csv"],
-//       data: parsed.data,
-//     })
-//   ).toBe(false);
-// });
-// test("removes exact header", () => {
-//   const processedData = removeExactHeader({ head, data: parsed.data });
-//   expect(processedData).toStrictEqual([
-//     ["h1r1Content", "h2r1Content", "h3r1Content"],
-//     ["h1r2Content", "h2r2Content", "h3r2Content"],
-//   ]);
-//   expect(processedData).not.toStrictEqual(parsed.data);
-// });
