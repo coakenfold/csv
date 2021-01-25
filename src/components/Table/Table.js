@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
-import { Table as AntTable } from "antd";
+import { Table as AntTable, Button } from "antd";
 import TableCell from "./TableCell";
-function Table({ config, updateCSV }) {
-  const { data, headings, mapping } = config;
+function Table({ config, updateCSV, csvData }) {
+  const { data, headings, mapping, validator } = config;
   if (data === undefined || headings === undefined || mapping === undefined) {
     return null;
   }
@@ -21,6 +21,8 @@ function Table({ config, updateCSV }) {
         title,
         key,
         value,
+        validator,
+        mappingKey: key,
         onEditSave: (update) => {
           updateCSV(update);
         },
@@ -37,11 +39,23 @@ function Table({ config, updateCSV }) {
     <AntTable
       columns={columns}
       dataSource={dataWithKeys}
+      pagination={false}
       components={{
         body: {
           cell: TableCell,
         },
       }}
+      footer={() => (
+        <Button
+          size="large"
+          type="primary"
+          onClick={() => {
+            console.log("POST:", config.data);
+          }}
+        >
+          Save
+        </Button>
+      )}
     />
   );
 }
