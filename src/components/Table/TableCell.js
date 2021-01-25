@@ -1,4 +1,4 @@
-import { useState, useEffect, /*useContext,*/ useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Input, InputNumber, DatePicker, Form } from "antd";
 import moment from "moment";
 
@@ -72,19 +72,13 @@ const TableCell = ({
   };
 
   const saveChanges = async () => {
-    if (componentType === "date") {
-      form.setFieldsValue({
-        [dataIndex]: editValue,
-      });
-    }
     form
       .validateFields()
       .then((values) => {
-        const update = {
+        onEditSave({
           ...record,
           [dataIndex]: editValue,
-        };
-        onEditSave(update);
+        });
         setIsEditing(false);
       })
       .catch(() => {});
