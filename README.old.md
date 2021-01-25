@@ -1,2 +1,0 @@
-# ravacon
-Technical test
