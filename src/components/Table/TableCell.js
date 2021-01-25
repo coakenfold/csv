@@ -1,4 +1,4 @@
-import { useState, useEffect, /*useContext,*/ useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Input, InputNumber, DatePicker, Form } from "antd";
 import moment from "moment";
 
@@ -28,7 +28,7 @@ const TableCell = ({
     form.setFieldsValue({
       [dataIndex]:
         componentType === "date"
-          ? moment(record[dataIndex], "YYYY-MM-DD")
+          ? moment(record[dataIndex], dateFormat)
           : record[dataIndex],
     });
   };
@@ -65,24 +65,20 @@ const TableCell = ({
     return componentType;
   });
   const componentType = ruleWithType ? ruleWithType.componentType : "text";
+  const dateFormat =
+    componentType === "date" ? ruleWithType.dateFormat : "YYYY-MM-DD";
   const formInitialValues = {
     [dataIndex]: record[dataIndex],
   };
 
   const saveChanges = async () => {
-    if (componentType === "date") {
-      form.setFieldsValue({
-        [dataIndex]: editValue,
-      });
-    }
     form
       .validateFields()
       .then((values) => {
-        const update = {
+        onEditSave({
           ...record,
           [dataIndex]: editValue,
-        };
-        onEditSave(update);
+        });
         setIsEditing(false);
       })
       .catch(() => {});
@@ -94,10 +90,8 @@ const TableCell = ({
     case "date":
       inputType = (
         <DatePicker
-          format="YYYY-MM-DD"
-          style={{
-            width: "100%",
-          }}
+          format={dateFormat}
+          className="w-100"
           allowClear={false}
           ref={inputRef}
           onChange={onDateChange}
