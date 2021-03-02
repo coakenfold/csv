@@ -1,5 +1,3 @@
-# Ravacon Technical test
-
 ## Requirements
 
 - [x] Drag & drop `.csv`
